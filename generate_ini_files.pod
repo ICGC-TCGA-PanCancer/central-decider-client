@@ -1,0 +1,60 @@
+=head1 VERSION
+
+Version 0.0.1
+
+=head1 AUTHOR(S)
+
+Adam Wright
+
+=over
+
+=item --usage
+
+=item --help
+
+=item --man
+
+=back
+
+=head1 DESCRIPTION
+
+A tool for generating VCF workflow ini files for the PanCancer project
+
+=head1 NAME
+
+Central Decider Client
+
+=head1 REQUIRED
+
+=item --gnos-repo[=][ ]<gnos_repo>
+
+This is the URL for the repo you would like to pull information from
+
+=item --template-file[=][ ]<file>
+
+The template that should be use for generating the ini files
+
+=for Euclid:
+        file.type:    readable
+
+=item --workflow-name[=][ ]<worklflow-name>
+
+This is the name as it would appear in the metadata and in SeqWare for the workflow you would like to schedule donors for.
+
+=head1 OPTIONAL
+
+=item --whitelist[=][ ]<whitelist-file>
+
+The path to the whitelist the ini files will be generated for
+
+=for Euclid:
+       whitelist-file.type: readable
+
+=item --donors[=][]<number-of-donors>
+
+=for Euclid:
+      number-of-donors.type: int > 0
+
+=item --test
+
+With this parameter specified it will query the central database but the central database will not record the samples as scheduled. 
