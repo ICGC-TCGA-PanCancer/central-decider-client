@@ -62,7 +62,7 @@ else {
   die "need to specify either donors or whitelist parameters";
 } 
 
-my $url = URI->new('http://http://decider.oicrsofteng.org/cgi-bin/central-decider/donor-vcf');
+my $url = URI->new('http://decider.oicrsofteng.org/cgi-bin/central-decider/donor-vcf');
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
