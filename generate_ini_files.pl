@@ -32,6 +32,12 @@ my $ua = LWP::UserAgent->new;
 $ua->timeout(10);
 $ua->env_proxy;
 
+my $host = 'decider.oicrsofteng.org';
+my $port = 80;
+my $realm = "decider";
+
+$ua->credentials("$host:$port",$realm, $ARGV{'--username'}, $ARGV{'--password'});
+
 my %parameters = (
                   'workflow-name' => $ARGV{'--workflow-name'},
                   'gnos-repo'     => $ARGV{'--gnos-repo'},
@@ -62,7 +68,7 @@ else {
   die "need to specify either donors or whitelist parameters";
 } 
 
-my $url = URI->new('http://decider.oicrsofteng.org/cgi-bin/central-decider/donor-vcf');
+my $url = URI->new("http://$host/cgi-bin/central-decider/donor-vcf");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
