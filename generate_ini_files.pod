@@ -37,9 +37,14 @@ The template that should be use for generating the ini files
 =for Euclid:
         file.type:    readable
 
+
 =item --workflow-name[=][ ]<worklflow-name>
 
 This is the name as it would appear in the metadata and in SeqWare for the workflow you would like to schedule donors for.
+
+=item --password[=][ ]<password>
+
+This will be provided to you by OICR
 
 =head1 OPTIONAL
 
