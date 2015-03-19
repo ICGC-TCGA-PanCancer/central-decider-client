@@ -4,6 +4,8 @@ This tool is used to generate workflow.ini files from ini templates and informat
 Installation
 
       sudo apt-get install make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl 
+      
+Please ask your OICR contact for required password. 
 
 AUTHOR(S)
     Adam Wright
@@ -28,6 +30,9 @@ REQUIRED
     --workflow-name[=][ ]<worklflow-name>
         This is the name as it would appear in the metadata and in SeqWare
         for the workflow you would like to schedule donors for.
+
+    --password[=][ ]<password>
+        This will be provided to you by OICR
 
 OPTIONAL
     --whitelist[=][ ]<whitelist-file>
