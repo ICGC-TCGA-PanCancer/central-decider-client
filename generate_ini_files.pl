@@ -19,18 +19,21 @@ use Data::Dumper;
 
 #USAGE: 
 
-#perl generate_ini_files.pl --w orkflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --donors=3 --test --template-file=templates/workflow-1.0.5.bsc.ini
+#perl generate_ini_files.pl --w orkflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --donors=3 --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
 
 #or
 
-
-#perl generate_ini_files.pl --w orkflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=whitelist.txt --test --template-file=templates/workflow-1.0.5.bsc.ini
-
-
+#perl generate_ini_files.pl --w orkflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=whitelist.txt --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
 
 my $ua = LWP::UserAgent->new;
 $ua->timeout(10);
 $ua->env_proxy;
+
+my $host = 'decider.oicrsofteng.org';
+my $port = 80;
+my $realm = "PanCancer Metadata";
+
+$ua->credentials("$host:$port", $realm, 'pancancer', $ARGV{'--password'});
 
 my %parameters = (
                   'workflow-name' => $ARGV{'--workflow-name'},
@@ -62,7 +65,7 @@ else {
   die "need to specify either donors or whitelist parameters";
 } 
 
-my $url = URI->new('http://decider.oicrsofteng.org/cgi-bin/central-decider/donor-vcf');
+my $url = URI->new("http://$host/cgi-bin/central-decider/donor-vcf");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
