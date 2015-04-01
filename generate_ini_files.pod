@@ -18,7 +18,7 @@ Adam Wright
 
 =head1 DESCRIPTION
 
-A tool for generating VCF workflow ini files for the PanCancer project
+A tool for generating workflow ini files for the PanCancer project
 
 =head1 NAME
 
@@ -46,6 +46,10 @@ This is the name as it would appear in the metadata and in SeqWare for the workf
 
 This will be provided to you by OICR
 
+=item --vm-location-code[=][ ]<vm-location-code>
+
+This is the location at which the analysis will be performed
+
 =head1 OPTIONAL
 
 =item --whitelist[=][ ]<whitelist-file>
@@ -59,6 +63,10 @@ The path to the whitelist the ini files will be generated for
 
 =for Euclid:
       number-of-donors.type: int > 0
+
+=item --training-set-two
+
+This is used if you only want returned ini's for samples that are part of training set 2.
 
 =item --test
 

@@ -40,7 +40,9 @@ my %parameters = (
                   'gnos-repo'     => $ARGV{'--gnos-repo'},
                  );
 
-$parameters{test} = 1 if ($ARGV{'--test'});
+$parameters{'vm_location_code'} = 1 if ($ARGV{'vm_location_code'});
+$parameters{'training-set-two'} = 1 if ($ARGV{'--training-set-two'});
+$parameters{test} = 1               if ($ARGV{'--test'});
 
 if ($ARGV{'--donors'}) {
     $parameters{'donor'} = $ARGV{'--donors'};
