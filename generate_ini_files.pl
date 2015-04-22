@@ -41,7 +41,7 @@ my %parameters = (
                  );
 
 $parameters{'vm_location_code'} = 1 if ($ARGV{'vm_location_code'});
-$parameters{'training-set-two'} = 1 if ($ARGV{'--training-set-two'});
+$parameters{'force'} = 1 if ($ARGV{'--force'});
 $parameters{test} = 1               if ($ARGV{'--test'});
 
 if ($ARGV{'--donors'}) {
@@ -67,13 +67,15 @@ else {
   die "need to specify either donors or whitelist parameters";
 } 
 
-my $url = URI->new("http://$host/cgi-bin/central-decider/donor-vcf");
+my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
 die $response->status_line unless ($response->is_success);
  
 my $json_ini_parameters = $response->decoded_content;
+
+print Dumper $json_ini_parameters;
 
 my $ini_parameters = JSON->new->utf8->decode($json_ini_parameters);
 

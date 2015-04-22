@@ -64,10 +64,10 @@ The path to the whitelist the ini files will be generated for
 =for Euclid:
       number-of-donors.type: int > 0
 
-=item --training-set-two
-
-This is used if you only want returned ini's for samples that are part of training set 2.
-
 =item --test
 
 With this parameter specified it will query the central database but the central database will not record the samples as scheduled. 
+
+=item --force
+
+This option make it so that INI files will be generated regardless of whether or not they have been run before.
