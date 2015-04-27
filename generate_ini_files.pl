@@ -75,21 +75,19 @@ die $response->status_line unless ($response->is_success);
  
 my $json_ini_parameters = $response->decoded_content;
 
-say $json_ini_parameters;
-
 if ($json_ini_parameters) {
-my $ini_parameters = JSON->new->utf8->decode($json_ini_parameters);
-
-foreach my $ini (@$ini_parameters) {
-    my $template = Template->new();
-    my $donor_id = $ini->{donor_id};
-    my $project_code = $ini->{project_code};
-    $ini->{workflow_name} = $ARGV{'--workflow-name'};
-    $ini->{gnos_repo}     = $ARGV{'--gnos-repo'};
-    my $ini_filename = "ini/$donor_id-$project_code.ini";
-    say "Generating: $ini_filename";
-    $template->process($ARGV{'--template-file'}, $ini, $ini_filename);
-}
+    my $ini_parameters = JSON->new->utf8->decode($json_ini_parameters);
+    
+    foreach my $ini (@$ini_parameters) {
+        my $template = Template->new();
+        my $donor_id = $ini->{donor_id};
+        my $project_code = $ini->{project_code};
+        $ini->{workflow_name} = $ARGV{'--workflow-name'};
+        $ini->{gnos_repo}     = $ARGV{'--gnos-repo'};
+        my $ini_filename = "ini/$donor_id-$project_code.ini";
+        say "Generating: $ini_filename";
+        $template->process($ARGV{'--template-file'}, $ini, $ini_filename);
+    }
 }
 else {
   say "No Workflows returned";
