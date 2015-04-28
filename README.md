@@ -36,27 +36,26 @@ In order to use this tool you will need a password. This password is used by the
 
 REQUIRED
     --gnos-repo[=][ ]<gnos_repo>
-        This is the URL for the repo you would like to pull information from
+        This is the URL for the repo you would like to pull information from if you are performing variant calling. If alignment this being performed,this flag will be used to specify the repo that the workflow will be uploading to. For these alignments the gnos repo will be determined based on where the unaligned bams are. 
 
     --template-file[=][ ]<file>
-        The template that should be use for generating the ini files
+        The template that should be use for generating the ini files. This template should be prepopulated with values that are custom to the environment that will be running the workflows. Values custom to the sample or donor will be pulled from the central decider and will be injected into the template and printed to file. 
 
     --workflow-name[=][ ]<worklflow-name>
-        This is the name as it would appear in the metadata and in SeqWare
-        for the workflow you would like to schedule donors for.
+        This is the name as it would appear in the metadata and in SeqWare for the workflow you would like to schedule donors / samples. The different workflows that the decider generates workflows for are: Workflow_Bundle_BWA (alignments), SangerPancancerCgpCnIndelSnvStr (Sanger), DEWrapperWorkflow (German), DKFZWorkflow (German), EMBLWorkflow (German). If you used the DEWrapperWorkflow the ini's will be generated for donors that have not had either the DKFW or the EBML workflows completed for them. For the rest they are of one to one corespondence. 
 
     --password[=][ ]<password>
-        This will be provided to you by OICR
+        This will be provided to you by OICR. Without it you will not be able to query the central decider. 
 
 OPTIONAL
     --whitelist[=][ ]<whitelist-file>
-        The path to the whitelist the ini files will be generated for
+        The path to the whitelist file that specifies the donors that client should generate workflow INIs for.
 
     --donors[=][]<number-of-donors>
         This will generate a list of n ini files that are needing to be processed
     --test
         With this parameter specified it will query the central database but
-        the central database will not record the samples as scheduled.
+        the central database will not record the samples as scheduled. Not necessary when specifying to use white lists. 
     --force
         This option make it so that INI files will be generated regardless of whether
         or not they have been run before.
