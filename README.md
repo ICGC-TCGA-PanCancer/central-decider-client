@@ -5,9 +5,9 @@ This tool is used to generate workflow.ini files. It takes in a list of donors o
 Adam Wright (adam.j.wright82@gmail.com)
 
 ##Steps to get started:
-1.  Obtain password from OICR
-2.  Obtain Whitelist of donors or samples from OICR
-3.  Clone repository into desired location
+1.  Obtain password from OICR, email Adam
+2.  Obtain Whitelist of donors or samples from OICR, email Christina Yung <Christina.Yung@oicr.on.ca> for a list and see them stored here: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations
+3.  Clone this repository into desired location
 4.  Install required packages
 5.  Generate INI's through providing generate_ini_files.pl with the desired input through command line flags
 6.  Ini files will appear in the ini folder after being generated
