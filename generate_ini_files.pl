@@ -67,7 +67,7 @@ else {
   die "need to specify either donors or whitelist parameters";
 } 
 
-my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
+my $url = URI->new("http://$host/cgi-bin/feature/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
@@ -79,14 +79,21 @@ if ($json_ini_parameters) {
     my $ini_parameters = JSON->new->utf8->decode($json_ini_parameters);
     
     foreach my $ini (@$ini_parameters) {
-        my $template = Template->new();
+        my $template = Tempte->new();
         my $donor_id = $ini->{donor_id};
         my $project_code = $ini->{project_code};
         $ini->{workflow_name} = $ARGV{'--workflow-name'};
         $ini->{gnos_repo}     = $ARGV{'--gnos-repo'};
         my $ini_filename = "ini/$donor_id-$project_code.ini";
-        say "Generating: $ini_filename";
-        $template->process($ARGV{'--template-file'}, $ini, $ini_filename);
+        if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
+                 || ($ARGV{'--workflow-name'} eq "EMBLWorkflow") 
+                 || ($ARGV{'--workflow-name'} eq "DKFZWorkflow") ) && (index($ini->{'tumour_analysis_ids'}, ',') != -1 )) {
+            say "Not creating file $ini_filename because it contains multiple tumours and the German workflows do not";
+        }
+        else {
+            say "Generating: $ini_filename";
+            $template->process($ARGV{'--template-file'}, $ini, $ini_filename);
+        }
     }
 }
 else {
