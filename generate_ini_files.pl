@@ -53,8 +53,8 @@ if( ($ARGV{'--cloud-env'} && $ARGV{'--whitelist'})
   die "need to specify either whitelist, cloud env or donors parameters";
 
 }
-elsif ($argv{'--donors'}) {
-    $parameter{'number-of-donors'} = $argv{'--donors'}
+elsif ($ARGV{'--donors'}) {
+    $parameters{'number-of-donors'} = $ARGV{'--donors'}
 }
 elsif ($ARGV{'--cloud-env'}) {
     $parameters{'cloud-env'} = $ARGV{'--cloud-env'};
@@ -83,15 +83,17 @@ my $url = URI->new("http://$host/cgi-bin/feature/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
-die $response->status_line unless ($response->is_success);
- 
-my $json_ini_parameters = $response->decoded_content;
+my $ini_parameters;
+eval {
+  $ini_parameters = JSON->new->utf8->decode($response->decoded_content);
+  1;
+} or do {
+  die $response->decoded_content;
+};
 
-if ($json_ini_parameters) {
-    my $ini_parameters = JSON->new->utf8->decode($json_ini_parameters);
-    
+if($ini_parameters) {
     foreach my $ini (@$ini_parameters) {
-        my $template = Tempte->new();
+        my $template = Template->new();
         my $donor_id = $ini->{donor_id};
         my $project_code = $ini->{project_code};
         $ini->{workflow_name} = $ARGV{'--workflow-name'};
