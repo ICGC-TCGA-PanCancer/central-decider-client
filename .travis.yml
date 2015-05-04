@@ -1,7 +1,12 @@
+os:
+  - linux
 language: perl
 rvm:
  - "5.18"
 before_install:
+  - cpanm --notest
   - sudo apt-get update -qq
   - sudo apt-get install -y make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl
 script: perl -c generate_ini_files.pl
+notifications:
+  email: false
