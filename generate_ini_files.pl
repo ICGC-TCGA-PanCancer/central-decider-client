@@ -79,7 +79,7 @@ else {
   die "need to specify either whitelist, cloud env or donors parameters";
 } 
 
-my $url = URI->new("http://$host/cgi-bin/feature/central-decider/get-ini");
+my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
