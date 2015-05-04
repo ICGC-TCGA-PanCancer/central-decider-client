@@ -8,7 +8,7 @@ rvm:
  - "5.18"
 before_install:
   - cpanm --notest IPC::System::Simple
-  - cpanm --notest GetOpt::Euclid
+  - cpanm --notest Getopt::Euclid
   - cpanm --notest JSON
   - cpanm --notest WWW::Perl
   - cpanm --notest Data::Dumper
