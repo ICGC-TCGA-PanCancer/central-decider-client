@@ -50,7 +50,7 @@ if( ($ARGV{'--cloud-env'} && $ARGV{'--whitelist'})
     || ($ARGV{'--cloud-env'} && $ARGV{'--donors'})
     || (!$ARGV{'--cloud-env'} && !$ARGV{'--whitelist'} && !$ARGV{'--donors'})) {
 
-  die "need to specify either whitelist, cloud env or donors parameters";
+  die "Need to specify only on of the following flags: whitelist, cloud env or donors";
 
 }
 elsif ($ARGV{'--donors'}) {
@@ -76,7 +76,7 @@ elsif ($ARGV{'--whitelist'}) {
     $parameters{'donor'} = [keys \%donors];
 }
 else {
-  die "need to specify either whitelist, cloud env or donors parameters";
+  die "Need to specify one of the folling flags: whitelist, cloud env or donors";
 } 
 
 my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
@@ -102,7 +102,7 @@ if($ini_parameters) {
         if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
                  || ($ARGV{'--workflow-name'} eq "EMBLWorkflow") 
                  || ($ARGV{'--workflow-name'} eq "DKFZWorkflow") ) && (index($ini->{'tumour_analysis_ids'}, ',') != -1 )) {
-            say "Not creating file $ini_filename because it contains multiple tumours and the German workflows do not";
+            say "Not creating file $ini_filename because it contains multiple tumours and the German workflows cannot handle multiple tumours yet";
         }
         else {
             say "Generating: $ini_filename";
@@ -111,5 +111,5 @@ if($ini_parameters) {
     }
 }
 else {
-  say "No Workflows returned";
+  say "No Workflows returned - No workflows should be scheduled based on parameters provided";
 }
