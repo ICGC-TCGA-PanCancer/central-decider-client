@@ -71,3 +71,7 @@ With this parameter specified it will query the central database but the central
       --force
 
 This option make it so that INI files will be generated regardless of whether or not they have been run before.
+
+##Travis
+
+Travis utility is used to test if the repo is compiling correctly
