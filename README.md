@@ -50,15 +50,24 @@ REQUIRED
         This will be provided to you by OICR. Without it you will not be able to query the central decider. 
 
 OPTIONAL
-    --whitelist[=][ ]<whitelist-file>
-        The path to the whitelist file that specifies the donors that client should generate workflow INIs for.
+Should specify one of --whitlist, --donors or --cloud-env
 
-    --donors[=][]<number-of-donors>
-        This will generate a list of n ini files that are needing to be processed
-    --test
-        With this parameter specified it will query the central database but
-        the central database will not record the samples as scheduled. Not necessary when specifying to use white lists. 
-    --force
-        This option make it so that INI files will be generated regardless of whether
-        or not they have been run before.
+      --whitelist[=][ ]<whitelist-file>
 
+The path to the whitelist the ini files will be generated.
+
+      --donors[=][]<number-of-donors>
+
+This flag should be used if you would like to recieve a donor that has not been scheduled in the last 30 days. (for testing only at this point)
+      
+      --cloud-env[=][ ]<env>
+
+The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations 
+
+      --test
+
+With this parameter specified it will query the central database but the central database will not record the samples as scheduled.
+
+      --force
+
+This option make it so that INI files will be generated regardless of whether or not they have been run before.

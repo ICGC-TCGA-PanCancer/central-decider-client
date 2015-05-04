@@ -19,11 +19,11 @@ use Data::Dumper;
 
 #USAGE: 
 
-#perl generate_ini_files.pl --w orkflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --donors=3 --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
+#perl generate_ini_files.pl --workflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --donors=3 --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
 
 #or
 
-#perl generate_ini_files.pl --w orkflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=whitelist.txt --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
+#perl generate_ini_files.pl --workflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=whitelist.txt --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
 
 my $ua = LWP::UserAgent->new;
 $ua->timeout(10);
@@ -38,14 +38,26 @@ $ua->credentials("$host:$port", $realm, 'pancancer', $ARGV{'--password'});
 my %parameters = (
                   'workflow-name' => $ARGV{'--workflow-name'},
                   'gnos-repo'     => $ARGV{'--gnos-repo'},
+
                  );
 
 $parameters{'vm_location_code'} = 1 if ($ARGV{'vm_location_code'});
 $parameters{'force'} = 1 if ($ARGV{'--force'});
 $parameters{test} = 1               if ($ARGV{'--test'});
 
-if ($ARGV{'--donors'}) {
-    $parameters{'donor'} = $ARGV{'--donors'};
+if( ($ARGV{'--cloud-env'} && $ARGV{'--whitelist'}) 
+    || ($ARGV{'--donor'} && $ARGV{'--whitelist'})
+    || ($ARGV{'--cloud-env'} && $ARGV{'--donor'})
+    || (!$ARGV{'--cloud-env'} && !$ARGV{'--whitelist'} && !$ARGV{'--donor'})) {
+
+  die "need to specify either whitelist, cloud env or donors parameters";
+
+}
+elsif ($ARGV{'--donors'}) {
+    $parameters{'number-of-donors'} = $ARGV{'--donors'}
+}
+elsif ($ARGV{'--cloud-env'}) {
+    $parameters{'cloud-env'} = $ARGV{'--cloud-env'};
 }
 elsif ($ARGV{'--whitelist'}) {
     my %donors;
@@ -64,20 +76,22 @@ elsif ($ARGV{'--whitelist'}) {
     $parameters{'donor'} = [keys \%donors];
 }
 else {
-  die "need to specify either donors or whitelist parameters";
+  die "need to specify either whitelist, cloud env or donors parameters";
 } 
 
-my $url = URI->new("http://$host/cgi-bin/feature/central-decider/get-ini");
+my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
-die $response->status_line unless ($response->is_success);
- 
-my $json_ini_parameters = $response->decoded_content;
+my $ini_parameters;
+eval {
+  $ini_parameters = JSON->new->utf8->decode($response->decoded_content);
+  1;
+} or do {
+  die $response->decoded_content;
+};
 
-if ($json_ini_parameters) {
-    my $ini_parameters = JSON->new->utf8->decode($json_ini_parameters);
-    
+if($ini_parameters) {
     foreach my $ini (@$ini_parameters) {
         my $template = Template->new();
         my $donor_id = $ini->{donor_id};
