@@ -10,7 +10,7 @@ before_install:
   - cpanm --notest IPC::System::Simple
   - cpanm --notest Getopt::Euclid
   - cpanm --notest JSON
-  - cpanm --notest WWW::Perl
+  - cpanm --notest LWP::UserAgent
   - cpanm --notest Data::Dumper
   - cpanm --notest Template
   - sudo apt-get update -qq
