@@ -1,0 +1,4 @@
+language: perl
+rvm:
+ - "5.18.2"
+script: perl -c generate_ini_files.pl
