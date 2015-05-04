@@ -62,7 +62,7 @@ This flag should be used if you would like to recieve a donor that has not been 
       
       --cloud-env[=][ ]<env>
 
-The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations
+The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations 
 
       --test
 
