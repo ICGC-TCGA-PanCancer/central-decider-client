@@ -79,7 +79,7 @@ if ($json_ini_parameters) {
     my $ini_parameters = JSON->new->utf8->decode($json_ini_parameters);
     
     foreach my $ini (@$ini_parameters) {
-        my $template = Tempte->new();
+        my $template = Template->new();
         my $donor_id = $ini->{donor_id};
         my $project_code = $ini->{project_code};
         $ini->{workflow_name} = $ARGV{'--workflow-name'};
