@@ -46,9 +46,9 @@ $parameters{'force'} = 1 if ($ARGV{'--force'});
 $parameters{test} = 1               if ($ARGV{'--test'});
 
 if( ($ARGV{'--cloud-env'} && $ARGV{'--whitelist'}) 
-    || ($ARGV{'--donor'} && $ARGV{'--whitelist'})
-    || ($ARGV{'--cloud-env'} && $ARGV{'--donor'})
-    || (!$ARGV{'--cloud-env'} && !$ARGV{'--whitelist'} && !$ARGV{'--donor'})) {
+    || ($ARGV{'--donors'} && $ARGV{'--whitelist'})
+    || ($ARGV{'--cloud-env'} && $ARGV{'--donors'})
+    || (!$ARGV{'--cloud-env'} && !$ARGV{'--whitelist'} && !$ARGV{'--donors'})) {
 
   die "need to specify either whitelist, cloud env or donors parameters";
 
