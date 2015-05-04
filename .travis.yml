@@ -1,12 +1,21 @@
 os:
   - linux
+branches: 
+ only:
+  - develop
 language: perl
 rvm:
  - "5.18"
 before_install:
-  - cpanm --notest
+  - cpanm --notest IPC::System::Simple
+  - cpanm --notest GetOpt::Euclid
+  - cpanm --notest JSON
+  - cpanm --notest WWW::Perl
+  - cpanm --notest Data::Dumper
+  - cpanm --notest Template
   - sudo apt-get update -qq
   - sudo apt-get install -y make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl
+install:
 script: perl -c generate_ini_files.pl
 notifications:
   email: false
