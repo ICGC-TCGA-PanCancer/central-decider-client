@@ -17,8 +17,6 @@ before_install:
   - cpanm --notest LWP::UserAgent
   - cpanm --notest Data::Dumper
   - cpanm --notest Template
-install:
-  - cpanm -n -q --skip-satisfied --installdeps .
 script: perl -c generate_ini_files.pl
 notifications:
   email: false
