@@ -30,6 +30,26 @@ In order to use this tool you will need a password. This password is used by the
 ##DKFZ / EMBL Workflows
 In order to specify the correct parameters and to schedule out the German Workflows refer to: https://github.com/SeqWare/public-workflows/blob/release/dkfz_embl_1.0.0/DEWrapperWorkflow/README.md
 
+##Creating Template
+Within the template folder there are samples templates for each of the major workflows that we run with the PanCancer project. With in these templates there are are values that can get injected into the templatem, when generating the INI files. 
+
+The the fields that get injected will appear in template in the format "[% \<desired-field-name\> %]", where you wil replace "\<desired-field-name\>" with one of the following values:
+
+| field name    | Example Injected Value   |
+| ------------- |----------------|
+| upload_gnos_key | TCGA |
+| control_analysis_id | 1f3cb1fe-a83f-4099-b4d4-0f0f6a3c0e48 |
+| tumour_analysis_ids | 88545635-e0dd-4710-a762-fb8bf1408d23 |
+| workflow_name | SangerPancancerCgpCnIndelSnvStr |
+| control_bam | PCAWG.458023b4-e6d6-45d4-bebe-2321fc693837.bam |
+| tumour_bams | PCAWG.fe319028-03ac-4741-bcc2-a6ed7a1e07ce.bam |
+| project_code | UCEC-US |
+| tumour_aliquot_ids | 31bc44b9-35ff-43fd-8a01-a834f3b1ce46 |
+| download_gnos_url | https://cghub.ucsc.edu/ |
+| upload_gnos_url | https://gtrepo-osdc-tcga.annailabs.com/ |
+| donor_id | f6d136c7-c250-4361-9fed-50f513959a40 |
+| download_gnos_key | cghub |
+
 ##Command line flags for generate_ini_files.pl
 
     --usage
