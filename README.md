@@ -1,45 +1,97 @@
 # central-decider-client
-This tool is used to generate workflow.ini files from ini templates and information gather from the central-decider server. 
+This tool is used to generate workflow.ini files. It takes in a list of donors or samples from a whitelist, queries the central decider and then generates an INI file for each of the samples in the provided list. Information in the resulting INI's come from either the INI template or from information provided by the central decider. 
 
-Installation
+##Author
+Adam Wright (adam.j.wright82@gmail.com)
+
+##Steps to get started:
+1.  Obtain password from OICR, email Adam
+2.  Obtain Whitelist of donors or samples from OICR, email Christina Yung <Christina.Yung@oicr.on.ca> for a list and see them stored here: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations
+3.  Clone this repository into desired location
+4.  Install required packages
+5.  Generate INI's through providing generate_ini_files.pl with the desired input through command line flags
+6.  Ini files will appear in the ini folder after being generated
+
+*by default, INI files that have been previously run and submitted to a PanCancer GNOS repository will not be generated.
+
+##Example Command 
+      perl generate_ini_files.pl --workflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=whitelist-ebi.txt --test --template-file=templates/dkfz-embl-template.ini --password=<password> --vm-location-code=ebi
+
+##Environment
+This tool is designed and tested with a Ubuntu 14.04 environment. The tool requires minimal CPU and memory. As the client performs a http request to the central decider the machine will require internet access on port 80. 
+      
+##Password
+In order to use this tool you will need a password. This password is used by the decider client when making a get request to the central decider. Although the INI files do not contain sensitive information, requiring authentication prevents malicious querying of the central decider / elasticsearch database. 
+
+##Installation
 
       sudo apt-get install make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl 
-      
-Please ask your OICR contact for required password. 
 
-AUTHOR(S)
-    Adam Wright
+##DKFZ / EMBL Workflows
+In order to specify the correct parameters and to schedule out the German Workflows refer to: https://github.com/SeqWare/public-workflows/blob/release/dkfz_embl_1.0.0/DEWrapperWorkflow/README.md
+
+##Creating Template
+Within the template folder there are samples templates for each of the major workflows that we run with the PanCancer project. With in these templates there are are values that can get injected into the templatem, when generating the INI files. 
+
+The the fields that get injected will appear in template in the format "[% \<desired-field-name\> %]", where you wil replace "\<desired-field-name\>" with one of the following values:
+
+| field name    | Example Injected Value   |
+| ------------- |----------------|
+| upload_gnos_key | TCGA |
+| control_analysis_id | 1f3cb1fe-a83f-4099-b4d4-0f0f6a3c0e48 |
+| tumour_analysis_ids | 88545635-e0dd-4710-a762-fb8bf1408d23 |
+| workflow_name | SangerPancancerCgpCnIndelSnvStr |
+| control_bam | PCAWG.458023b4-e6d6-45d4-bebe-2321fc693837.bam |
+| tumour_bams | PCAWG.fe319028-03ac-4741-bcc2-a6ed7a1e07ce.bam |
+| project_code | UCEC-US |
+| tumour_aliquot_ids | 31bc44b9-35ff-43fd-8a01-a834f3b1ce46 |
+| download_gnos_url | https://cghub.ucsc.edu/ |
+| upload_gnos_url | https://gtrepo-osdc-tcga.annailabs.com/ |
+| donor_id | f6d136c7-c250-4361-9fed-50f513959a40 |
+| download_gnos_key | cghub |
+
+##Command line flags for generate_ini_files.pl
 
     --usage
     --help
     --man
 
-DESCRIPTION
-    A tool for generating VCF workflow ini files for the PanCancer project
-
-NAME
-    generate_ini_files.pl
-
 REQUIRED
     --gnos-repo[=][ ]<gnos_repo>
-        This is the URL for the repo you would like to pull information from
+        This is the URL for the repo you would like to pull information from if you are performing variant calling. If alignment this being performed,this flag will be used to specify the repo that the workflow will be uploading to. For these alignments the gnos repo will be determined based on where the unaligned bams are. 
 
     --template-file[=][ ]<file>
-        The template that should be use for generating the ini files
+        The template that should be use for generating the ini files. This template should be prepopulated with values that are custom to the environment that will be running the workflows. Values custom to the sample or donor will be pulled from the central decider and will be injected into the template and printed to file. 
 
     --workflow-name[=][ ]<worklflow-name>
-        This is the name as it would appear in the metadata and in SeqWare
-        for the workflow you would like to schedule donors for.
+        This is the name as it would appear in the metadata and in SeqWare for the workflow you would like to schedule donors / samples. The different workflows that the decider generates workflows for are: Workflow_Bundle_BWA (alignments), SangerPancancerCgpCnIndelSnvStr (Sanger), DEWrapperWorkflow (German), DKFZWorkflow (German), EMBLWorkflow (German). If you used the DEWrapperWorkflow the ini's will be generated for donors that have not had either the DKFW or the EBML workflows completed for them. For the rest they are of one to one corespondence. 
 
     --password[=][ ]<password>
-        This will be provided to you by OICR
+        This will be provided to you by OICR. Without it you will not be able to query the central decider. 
 
 OPTIONAL
-    --whitelist[=][ ]<whitelist-file>
-        The path to the whitelist the ini files will be generated for
+Should specify one of --whitlist, --donors or --cloud-env
 
-    --donors[=][]<number-of-donors>
-    --test
-        With this parameter specified it will query the central database but
-        the central database will not record the samples as scheduled.
+      --whitelist[=][ ]<whitelist-file>
 
+The path to the whitelist the ini files will be generated.
+
+      --donors[=][]<number-of-donors>
+
+This flag should be used if you would like to recieve a donor that has not been scheduled in the last 30 days. (for testing only at this point)
+      
+      --cloud-env[=][ ]<env>
+
+The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations 
+
+      --test
+
+With this parameter specified it will query the central database but the central database will not record the samples as scheduled.
+
+      --force
+
+This option make it so that INI files will be generated regardless of whether or not they have been run before.
+
+##Travis
+
+Travis utility is used to test if the repo is compiling correctly

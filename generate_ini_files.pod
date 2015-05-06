@@ -18,7 +18,7 @@ Adam Wright
 
 =head1 DESCRIPTION
 
-A tool for generating VCF workflow ini files for the PanCancer project
+A tool for generating workflow ini files for the PanCancer project
 
 =head1 NAME
 
@@ -37,7 +37,6 @@ The template that should be use for generating the ini files
 =for Euclid:
         file.type:    readable
 
-
 =item --workflow-name[=][ ]<worklflow-name>
 
 This is the name as it would appear in the metadata and in SeqWare for the workflow you would like to schedule donors for.
@@ -46,7 +45,13 @@ This is the name as it would appear in the metadata and in SeqWare for the workf
 
 This will be provided to you by OICR
 
+=item --vm-location-code[=][ ]<vm-location-code>
+
+This is the location at which the analysis will be performed
+
 =head1 OPTIONAL
+
+Should specify one of --whitlist, --donors or --cloud-env
 
 =item --whitelist[=][ ]<whitelist-file>
 
@@ -55,11 +60,24 @@ The path to the whitelist the ini files will be generated for
 =for Euclid:
        whitelist-file.type: readable
 
+
 =item --donors[=][]<number-of-donors>
 
+This flag should be used if you would like to recieve a donor that has not been scheduled in the last 30 days. (for testing only at this point)
+ 
 =for Euclid:
       number-of-donors.type: int > 0
+
+
+
+=item --cloud-env[=][ ]<env>
+
+The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations
 
 =item --test
 
 With this parameter specified it will query the central database but the central database will not record the samples as scheduled. 
+
+=item --force
+
+This option make it so that INI files will be generated regardless of whether or not they have been run before.
