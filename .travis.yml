@@ -7,16 +7,10 @@ language: perl
 rvm:
  - "5.18"
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -qq make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
-  - cpanm --notest IPC::System::Simple
-  - cpanm --notest Getopt::Euclid
-  - cpanm --notest JSON
-  - cpanm --notest LWP::UserAgent
-  - cpanm --notest Data::Dumper
-  - cpanm --notest Template
+install:
+  - cpanm --quiet --notest --installdeps .
 script: perl -c generate_ini_files.pl
 notifications:
   email: false
