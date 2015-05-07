@@ -24,8 +24,9 @@ This tool is designed and tested with a Ubuntu 14.04 environment. The tool requi
 In order to use this tool you will need a password. This password is used by the decider client when making a get request to the central decider. Although the INI files do not contain sensitive information, requiring authentication prevents malicious querying of the central decider / elasticsearch database. 
 
 ##Installation
+      If you have cpanminus run: cpanm --quiet --notest --installdeps .
 
-      sudo apt-get install make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl 
+      Or with Apt-get run: sudo apt-get update; sudo apt-get install make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl 
 
 ##DKFZ / EMBL Workflows
 In order to specify the correct parameters and to schedule out the German Workflows refer to: https://github.com/SeqWare/public-workflows/blob/release/dkfz_embl_1.0.0/DEWrapperWorkflow/README.md
