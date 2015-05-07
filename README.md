@@ -50,47 +50,9 @@ The the fields that get injected will appear in template in the format "[% \<des
 | donor_id | f6d136c7-c250-4361-9fed-50f513959a40 |
 | download_gnos_key | cghub |
 
-##Command line flags for generate_ini_files.pl
+##Command line flags
 
-    --usage
-    --help
-    --man
-
-REQUIRED
-    --gnos-repo[=][ ]<gnos_repo>
-        This is the URL for the repo you would like to pull information from if you are performing variant calling. If alignment this being performed,this flag will be used to specify the repo that the workflow will be uploading to. For these alignments the gnos repo will be determined based on where the unaligned bams are. 
-
-    --template-file[=][ ]<file>
-        The template that should be use for generating the ini files. This template should be prepopulated with values that are custom to the environment that will be running the workflows. Values custom to the sample or donor will be pulled from the central decider and will be injected into the template and printed to file. 
-
-    --workflow-name[=][ ]<worklflow-name>
-        This is the name as it would appear in the metadata and in SeqWare for the workflow you would like to schedule donors / samples. The different workflows that the decider generates workflows for are: Workflow_Bundle_BWA (alignments), SangerPancancerCgpCnIndelSnvStr (Sanger), DEWrapperWorkflow (German), DKFZWorkflow (German), EMBLWorkflow (German). If you used the DEWrapperWorkflow the ini's will be generated for donors that have not had either the DKFW or the EBML workflows completed for them. For the rest they are of one to one corespondence. 
-
-    --password[=][ ]<password>
-        This will be provided to you by OICR. Without it you will not be able to query the central decider. 
-
-OPTIONAL
-Should specify one of --whitlist, --donors or --cloud-env
-
-      --whitelist[=][ ]<whitelist-file>
-
-The path to the whitelist the ini files will be generated.
-
-      --donors[=][]<number-of-donors>
-
-This flag should be used if you would like to recieve a donor that has not been scheduled in the last 30 days. (for testing only at this point)
-      
-      --cloud-env[=][ ]<env>
-
-The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations 
-
-      --test
-
-With this parameter specified it will query the central database but the central database will not record the samples as scheduled.
-
-      --force
-
-This option make it so that INI files will be generated regardless of whether or not they have been run before.
+see [generate_ini_files.pod](generate_ini_files.pod) 
 
 ##Travis
 

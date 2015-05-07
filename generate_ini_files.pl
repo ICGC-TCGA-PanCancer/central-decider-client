@@ -36,14 +36,14 @@ my $realm = "PanCancer Metadata";
 $ua->credentials("$host:$port", $realm, 'pancancer', $ARGV{'--password'});
 
 my %parameters = (
-                  'workflow-name' => $ARGV{'--workflow-name'},
-                  'gnos-repo'     => $ARGV{'--gnos-repo'},
-
+                  'workflow-name'  => $ARGV{'--workflow-name'},
+                  'gnos-repo'      => $ARGV{'--gnos-repo'},
+                  'local-file-dir' => $ARGV{'--local-file-dir'}
                  );
 
-$parameters{'vm_location_code'} = 1 if ($ARGV{'vm_location_code'});
-$parameters{'force'} = 1 if ($ARGV{'--force'});
-$parameters{test} = 1               if ($ARGV{'--test'});
+$parameters{'vm_location_code'} = 1 if ($ARGV{'--vm_location_code'});
+$parameters{'force'} = 1            if ($ARGV{'--force'});
+$parameters{'test'} = 1             if ($ARGV{'--test'});
 
 if( ($ARGV{'--cloud-env'} && $ARGV{'--whitelist'}) 
     || ($ARGV{'--donors'} && $ARGV{'--whitelist'})

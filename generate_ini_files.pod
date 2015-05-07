@@ -6,7 +6,7 @@ Version 0.0.1
 
 Adam Wright
 
-=over
+=over 4
 
 =item --usage
 
@@ -25,6 +25,8 @@ A tool for generating workflow ini files for the PanCancer project
 Central Decider Client
 
 =head1 REQUIRED
+
+=over
 
 =item --gnos-repo[=][ ]<gnos_repo>
 
@@ -49,9 +51,13 @@ This will be provided to you by OICR
 
 This is the location at which the analysis will be performed
 
+=back
+
 =head1 OPTIONAL
 
 Should specify one of --whitlist, --donors or --cloud-env
+
+=over
 
 =item --whitelist[=][ ]<whitelist-file>
 
@@ -68,11 +74,13 @@ This flag should be used if you would like to recieve a donor that has not been 
 =for Euclid:
       number-of-donors.type: int > 0
 
-
-
 =item --cloud-env[=][ ]<env>
 
 The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations
+
+=item --local-file-dir[=][ ]<directory>
+
+Specify this path in order to have the tumourBams and controlBams be specifeid with full paths
 
 =item --test
 
@@ -81,3 +89,5 @@ With this parameter specified it will query the central database but the central
 =item --force
 
 This option make it so that INI files will be generated regardless of whether or not they have been run before.
+
+=back
