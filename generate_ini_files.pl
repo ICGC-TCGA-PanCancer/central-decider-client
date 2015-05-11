@@ -101,7 +101,7 @@ if($ini_parameters) {
         my $ini_filename = "ini/$donor_id-$project_code.ini";
         if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
                  || ($ARGV{'--workflow-name'} eq "EMBLWorkflow") 
-                 || ($ARGV{'--workflow-name'} eq "DKFZWorkflow") ) && (index($ini->{'tumour_analysis_ids'}, ',') != -1 )) {
+                 || ($ARGV{'--workflow-name'} eq "DKFZWorkflow") ) && (index($ini->{'tumour_analysis_ids'}, ':') != -1 )) {
             say "Not creating file $ini_filename because it contains multiple tumours and the German workflows cannot handle multiple tumours yet";
         }
         else {
