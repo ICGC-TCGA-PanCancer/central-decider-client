@@ -91,14 +91,19 @@ eval {
   die $response->decoded_content;
 };
 
-if($ini_parameters) {
+if($ini_parameters && @$ini_parameters) {
     foreach my $ini (@$ini_parameters) {
         my $template = Template->new();
         my $donor_id = $ini->{donor_id};
         my $project_code = $ini->{project_code};
+        my $sample_id = $ini->{submitter_sample_id};
+        my $sample_type = $ini->{sample_type};
+        my $aliquot_id = $ini->{aliquot_id};
+
         $ini->{workflow_name} = $ARGV{'--workflow-name'};
         $ini->{gnos_repo}     = $ARGV{'--gnos-repo'};
-        my $ini_filename = "ini/$donor_id-$project_code.ini";
+
+        my $ini_filename = ($ARGV{'--workflow-name'} eq 'Workflow_Bundle_BWA')? "ini/$donor_id-$project_code-$sample_id-$aliquot_id-$sample_type.ini" : "ini/$donor_id-$project_code.ini";
         if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
                  || ($ARGV{'--workflow-name'} eq "EMBLWorkflow") 
                  || ($ARGV{'--workflow-name'} eq "DKFZWorkflow") ) && (index($ini->{'tumour_analysis_ids'}, ':') != -1 )) {
