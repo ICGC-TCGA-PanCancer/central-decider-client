@@ -17,6 +17,9 @@ Adam Wright (adam.j.wright82@gmail.com)
 ##Example Command 
       perl generate_ini_files.pl --workflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=whitelist-ebi.txt --test --template-file=templates/dkfz-embl-template.ini --password=<password> --vm-location-code=ebi
 
+##Example transfer to S3
+      perl generate_ini_files.pl --test --workflow-name=Workflow_GNOS_to_S3 --password=<password> --vm-location-code=bsc --template-file=templates/gnos_to_s3.ini --number-of-donors=1
+
 ##Environment
 This tool is designed and tested with a Ubuntu 14.04 environment. The tool requires minimal CPU and memory. As the client performs a http request to the central decider the machine will require internet access on port 80. 
       
@@ -44,6 +47,7 @@ The the fields that get injected will appear in template in the format "[% \<des
 | workflow_name | SangerPancancerCgpCnIndelSnvStr |
 | control_bam | PCAWG.458023b4-e6d6-45d4-bebe-2321fc693837.bam |
 | tumour_bams | PCAWG.fe319028-03ac-4741-bcc2-a6ed7a1e07ce.bam |
+| vm-location-code | ebi |
 | project_code | UCEC-US |
 | tumour_aliquot_ids | 31bc44b9-35ff-43fd-8a01-a834f3b1ce46 |
 | download_gnos_url | https://cghub.ucsc.edu/ |

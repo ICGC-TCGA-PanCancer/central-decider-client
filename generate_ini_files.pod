@@ -43,10 +43,6 @@ This is the name as it would appear in the metadata and in SeqWare for the workf
 
 This will be provided to you by OICR
 
-=item --vm-location-code[=][ ]<vm-location-code>
-
-This is the location at which the analysis will be performed
-
 =back
 
 =head1 OPTIONAL
@@ -62,8 +58,7 @@ The path to the whitelist the ini files will be generated for
 =for Euclid:
        whitelist-file.type: readable
 
-
-=item --number-of-donors[=][]<number-of-donors>
+=item --number-of-donors[=][ ]<number-of-donors>
 
 This flag should be used if you would like to recieve a donor that has not been scheduled in the last 30 days. (for testing only at this point)
  
@@ -73,6 +68,11 @@ This flag should be used if you would like to recieve a donor that has not been 
 =item --cloud-env[=][ ]<env>
 
 The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations
+
+=item --vm-location-code[=][ ]<location-code>
+
+This is the location at which the analysis will be performed. See th first column in the following file: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations/blob/develop/scripts/site_location.txt
+When specified it the central decider will check to make sure the location code is valid and will be available to be injected into your template. 
 
 =item --gnos-repo[=][ ]<gnos_repo>
 

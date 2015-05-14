@@ -41,10 +41,10 @@ my %parameters = (
                   'local-file-dir' => $ARGV{'--local-file-dir'}
                  );
 
-$parameters{'vm_location_code'} = 1 if ($ARGV{'--vm_location_code'});
+$parameters{'vm-location-code'} = $ARGV{'--vm-location-code'} if ($ARGV{'--vm-location-code'});
+
 $parameters{'force'} = 1            if ($ARGV{'--force'});
 $parameters{'test'} = 1             if ($ARGV{'--test'});
-
 
 if( ($ARGV{'--cloud-env'} && $ARGV{'--whitelist'}) 
     || ($ARGV{'--number-of-donors'} && $ARGV{'--whitelist'})
@@ -101,8 +101,9 @@ if($ini_parameters && @$ini_parameters) {
         my $sample_type = $ini->{sample_type};
         my $aliquot_id = $ini->{aliquot_id};
 
-        $ini->{workflow_name} = $ARGV{'--workflow-name'};
-        $ini->{gnos_repo}     = $ARGV{'--gnos-repo'};
+        $ini->{workflow_name}    = $ARGV{'--workflow-name'};
+        $ini->{gnos_repo}        = $ARGV{'--gnos-repo'} if ($ARGV{'--gnos-repo'});
+        $ini->{vm_location_code} = $ARGV{'--vm-location-code'} if ($ARGV{'--vm-location-code'});
 
         my $ini_filename = ($ARGV{'--workflow-name'} eq 'Workflow_Bundle_BWA')? "ini/$donor_id-$project_code-$sample_id-$sample_type.ini" : "ini/$donor_id-$project_code.ini";
         if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
