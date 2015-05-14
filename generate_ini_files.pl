@@ -19,7 +19,7 @@ use Data::Dumper;
 
 #USAGE: 
 
-#perl generate_ini_files.pl --workflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --donors=3 --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
+#perl generate_ini_files.pl --workflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --number-of-donors=3 --test --template-file=templates/workflow-1.0.5.bsc.ini --password=<pw>
 
 #or
 
@@ -41,20 +41,21 @@ my %parameters = (
                   'local-file-dir' => $ARGV{'--local-file-dir'}
                  );
 
-$parameters{'vm_location_code'} = 1 if ($ARGV{'--vm_location_code'});
+$parameters{'vm-location-code'} = $ARGV{'--vm-location-code'} if ($ARGV{'--vm-location-code'});
+
 $parameters{'force'} = 1            if ($ARGV{'--force'});
 $parameters{'test'} = 1             if ($ARGV{'--test'});
 
 if( ($ARGV{'--cloud-env'} && $ARGV{'--whitelist'}) 
-    || ($ARGV{'--donors'} && $ARGV{'--whitelist'})
-    || ($ARGV{'--cloud-env'} && $ARGV{'--donors'})
-    || (!$ARGV{'--cloud-env'} && !$ARGV{'--whitelist'} && !$ARGV{'--donors'})) {
+    || ($ARGV{'--number-of-donors'} && $ARGV{'--whitelist'})
+    || ($ARGV{'--cloud-env'} && $ARGV{'--number-of-donors'})
+    || (!$ARGV{'--cloud-env'} && !$ARGV{'--whitelist'} && !$ARGV{'--number-of-donors'})) {
 
-  die "Need to specify only on of the following flags: whitelist, cloud env or donors";
+  die "Need to specify only on of the following flags: whitelist, cloud env or number-of-donors";
 
 }
-elsif ($ARGV{'--donors'}) {
-    $parameters{'number-of-donors'} = $ARGV{'--donors'}
+elsif ($ARGV{'--number-of-donors'}) {
+    $parameters{'number-of-donors'} = $ARGV{'--number-of-donors'}
 }
 elsif ($ARGV{'--cloud-env'}) {
     $parameters{'cloud-env'} = $ARGV{'--cloud-env'};
@@ -76,10 +77,10 @@ elsif ($ARGV{'--whitelist'}) {
     $parameters{'donor'} = [keys \%donors];
 }
 else {
-  die "Need to specify one of the folling flags: whitelist, cloud env or donors";
+  die "Need to specify one of the folling flags: whitelist, cloud env or number-of-donors";
 } 
 
-my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
+my $url = URI->new("http://$host/cgi-bin/feature/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
@@ -100,8 +101,9 @@ if($ini_parameters && @$ini_parameters) {
         my $sample_type = $ini->{sample_type};
         my $aliquot_id = $ini->{aliquot_id};
 
-        $ini->{workflow_name} = $ARGV{'--workflow-name'};
-        $ini->{gnos_repo}     = $ARGV{'--gnos-repo'};
+        $ini->{workflow_name}    = $ARGV{'--workflow-name'};
+        $ini->{gnos_repo}        = $ARGV{'--gnos-repo'} if ($ARGV{'--gnos-repo'});
+        $ini->{vm_location_code} = $ARGV{'--vm-location-code'} if ($ARGV{'--vm-location-code'});
 
         my $ini_filename = ($ARGV{'--workflow-name'} eq 'Workflow_Bundle_BWA')? "ini/$donor_id-$project_code-$sample_id-$sample_type.ini" : "ini/$donor_id-$project_code.ini";
         if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
