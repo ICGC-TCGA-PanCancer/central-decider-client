@@ -28,10 +28,6 @@ Central Decider Client
 
 =over
 
-=item --gnos-repo[=][ ]<gnos_repo>
-
-This is the URL for the repo you would like to pull information from
-
 =item --template-file[=][ ]<file>
 
 The template that should be use for generating the ini files
@@ -67,7 +63,7 @@ The path to the whitelist the ini files will be generated for
        whitelist-file.type: readable
 
 
-=item --donors[=][]<number-of-donors>
+=item --number-of-donors[=][]<number-of-donors>
 
 This flag should be used if you would like to recieve a donor that has not been scheduled in the last 30 days. (for testing only at this point)
  
@@ -77,6 +73,10 @@ This flag should be used if you would like to recieve a donor that has not been 
 =item --cloud-env[=][ ]<env>
 
 The name of the environment according to the folder listed in: https://github.com/ICGC-TCGA-PanCancer/pcawg-operations
+
+=item --gnos-repo[=][ ]<gnos_repo>
+
+This is the URL for the repo you would like to pull information from for VCF workflows and where to upload information to for alignment workflows.
 
 =item --local-file-dir[=][ ]<directory>
 
