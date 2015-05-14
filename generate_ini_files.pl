@@ -79,7 +79,7 @@ else {
   die "Need to specify one of the folling flags: whitelist, cloud env or donors";
 } 
 
-my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
+my $url = URI->new("http://$host/cgi-bin/feature/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
@@ -103,7 +103,7 @@ if($ini_parameters && @$ini_parameters) {
         $ini->{workflow_name} = $ARGV{'--workflow-name'};
         $ini->{gnos_repo}     = $ARGV{'--gnos-repo'};
 
-        my $ini_filename = ($ARGV{'--workflow-name'} eq 'Workflow_Bundle_BWA')? "ini/$donor_id-$project_code-$sample_id-$aliquot_id-$sample_type.ini" : "ini/$donor_id-$project_code.ini";
+        my $ini_filename = ($ARGV{'--workflow-name'} eq 'Workflow_Bundle_BWA')? "ini/$donor_id-$project_code-$sample_id-$sample_type.ini" : "ini/$donor_id-$project_code.ini";
         if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
                  || ($ARGV{'--workflow-name'} eq "EMBLWorkflow") 
                  || ($ARGV{'--workflow-name'} eq "DKFZWorkflow") ) && (index($ini->{'tumour_analysis_ids'}, ':') != -1 )) {
