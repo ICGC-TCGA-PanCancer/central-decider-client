@@ -32,7 +32,8 @@ In order to use this tool you will need a password. This password is used by the
       Or with Apt-get run: sudo apt-get update; sudo apt-get install make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl 
 
 ##DKFZ / EMBL Workflows
-In order to specify the correct parameters and to schedule out the German Workflows refer to: https://github.com/SeqWare/public-workflows/blob/release/dkfz_embl_1.0.0/DEWrapperWorkflow/README.md
+In order to specify the correct parameters and to schedule out the German Workflows refer to: 
+https://github.com/ICGC-TCGA-PanCancer/DEWrapperWorkflow#user-tips-for-workflow-settings
 
 ##Creating Template
 Within the template folder there are samples templates for each of the major workflows that we run with the PanCancer project. With in these templates there are are values that can get injected into the templatem, when generating the INI files. 
