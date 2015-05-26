@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ICGC-TCGA-PanCancer/central-decider-client.svg?branch=develop)](https://travis-ci.org/ICGC-TCGA-PanCancer/central-decider-client)
+
 # central-decider-client
 This tool is used to generate workflow.ini files. It takes in a list of donors or samples from a whitelist, queries the central decider and then generates an INI file for each of the samples in the provided list. Information in the resulting INI's come from either the INI template or from information provided by the central decider. 
 
