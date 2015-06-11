@@ -22,6 +22,20 @@ Adam Wright (adam.j.wright82@gmail.com)
 ##Example transfer to S3
       perl generate_ini_files.pl --test --workflow-name=Workflow_GNOS_to_S3 --password=<password> --vm-location-code=bsc --template-file=templates/gnos_to_s3.ini --number-of-donors=1
 
+##Workflow names that the central decider creates INI's for
+
+      [vcf]
+      SangerPancancerCgpCnIndelSnvStr=sanger
+      DEWrapperWorkflow=german
+      DKFZWorkflow=german
+      EMBLWorkflow=german
+
+      [bam]
+      Workflow_Bundle_BWA=bwa
+
+      [transfer]
+      Workflow_GNOS_to_S3=s3
+
 ##Environment
 This tool is designed and tested with a Ubuntu 14.04 environment. The tool requires minimal CPU and memory. As the client performs a http request to the central decider the machine will require internet access on port 80. 
       
