@@ -1,9 +1,11 @@
 [![Build Status](https://travis-ci.org/ICGC-TCGA-PanCancer/central-decider-client.svg?branch=develop)](https://travis-ci.org/ICGC-TCGA-PanCancer/central-decider-client)
 
 # central-decider-client
-This tool is used to generate workflow.ini files. It takes in a list of donors or samples from a whitelist, queries the central decider and then generates an INI file for each of the samples in the provided list. Information in the resulting INI's come from either the INI template or from information provided by the central decider. 
+
+This tool is used to generate workflow.ini files. It takes in a list of donors or samples from a whitelist, queries the central decider and then generates an INI file for each of the samples in the provided list. Information in the resulting INI's come from either the INI template or from information provided by the central decider.
 
 ##Author
+
 Adam Wright (adam.j.wright82@gmail.com)
 
 ##Steps to get started:
@@ -14,13 +16,27 @@ Adam Wright (adam.j.wright82@gmail.com)
 5.  Generate INI's through providing generate_ini_files.pl with the desired input through command line flags
 6.  Ini files will appear in the ini folder after being generated
 
+Alternatively, you can use the Dockerfile to create a Docker comtainer.  In this case, you can
+mount your directory of whitelists and execute the script from `/opt/central-decider-client`
+
+    docker run -v `pwd`:/whitelists -it pancancer/central-decider-client
+
+In the example above `pwd` has my whitelists and they will appear in the Ubuntu Docker
+container under `/whitelists`.  You can then run the commands below as you normally would
+substituting the paths as needed.
+
 *by default, INI files that have been previously run and submitted to a PanCancer GNOS repository will not be generated.
 
-##Example Command 
+##Example Command
       perl generate_ini_files.pl --workflow-name=SangerPancancerCgpCnIndelSnvStr --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=whitelist-ebi.txt --test --template-file=templates/dkfz-embl-template.ini --password=<password> --vm-location-code=ebi
 
 ##Example transfer to S3
       perl generate_ini_files.pl --test --workflow-name=Workflow_GNOS_to_S3 --password=<password> --vm-location-code=bsc --template-file=templates/gnos_to_s3.ini --number-of-donors=1
+
+##Example for BWA with and without Whitelists Specified
+
+      perl generate_ini_files.pl --workflow-name=Workflow_Bundle_BWA  --gnos-repo=https://gtrepo-ebi.annailabs.com/ --whitelist=aws_ireland.150706-1415.mix.txt  --template-file=templates/bwa_template.ini --password=<password> --vm-location-code=aws_ireland
+      perl generate_ini_files.pl --workflow-name=Workflow_Bundle_BWA  --gnos-repo=https://gtrepo-ebi.annailabs.com/   --template-file=templates/bwa_template.ini --password=<password> --vm-location-code=aws_ireland --cloud-env aws_ireland
 
 ##Workflow names that the central decider creates INI's for
 
@@ -37,22 +53,26 @@ Adam Wright (adam.j.wright82@gmail.com)
       Workflow_GNOS_to_S3=s3
 
 ##Environment
-This tool is designed and tested with a Ubuntu 14.04 environment. The tool requires minimal CPU and memory. As the client performs a http request to the central decider the machine will require internet access on port 80. 
-      
+This tool is designed and tested with a Ubuntu 14.04 environment. The tool requires minimal CPU and memory. As the client performs a http request to the central decider the machine will require internet access on port 80.
+
 ##Password
-In order to use this tool you will need a password. This password is used by the decider client when making a get request to the central decider. Although the INI files do not contain sensitive information, requiring authentication prevents malicious querying of the central decider / elasticsearch database. 
+In order to use this tool you will need a password. This password is used by the decider client when making a get request to the central decider. Although the INI files do not contain sensitive information, requiring authentication prevents malicious querying of the central decider / elasticsearch database.
 
 ##Installation
       If you have cpanminus run: cpanm --quiet --notest --installdeps .
 
-      Or with Apt-get run: sudo apt-get update; sudo apt-get install make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl 
+      Or with Apt-get run: sudo apt-get update; sudo apt-get install make git libipc-system-simple-perl libgetopt-euclid-perl libjson-perl libwww-perl libdata-dumper-simple-perl libtemplate-perl
+
+### Alternatively Build with Docker
+
+    docker build -t pancancer/central-decider-client .
 
 ##DKFZ / EMBL Workflows
-In order to specify the correct parameters and to schedule out the German Workflows refer to: 
+In order to specify the correct parameters and to schedule out the German Workflows refer to:
 https://github.com/ICGC-TCGA-PanCancer/DEWrapperWorkflow#user-tips-for-workflow-settings
 
 ##Creating Template
-Within the template folder there are samples templates for each of the major workflows that we run with the PanCancer project. With in these templates there are are values that can get injected into the templatem, when generating the INI files. 
+Within the template folder there are samples templates for each of the major workflows that we run with the PanCancer project. With in these templates there are are values that can get injected into the templatem, when generating the INI files.
 
 The the fields that get injected will appear in template in the format "[% \<desired-field-name\> %]", where you wil replace "\<desired-field-name\>" with one of the following values:
 
@@ -74,7 +94,7 @@ The the fields that get injected will appear in template in the format "[% \<des
 
 ##Command line flags
 
-see [generate_ini_files.pod](generate_ini_files.pod) 
+see [generate_ini_files.pod](generate_ini_files.pod)
 
 ##Travis
 
