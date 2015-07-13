@@ -80,7 +80,7 @@ else {
   die "Need to specify one of the folling flags: whitelist, cloud env or number-of-donors";
 } 
 
-my $url = URI->new("http://$host/cgi-bin/feature/central-decider/get-ini");
+my $url = URI->new("http://$host/cgi-bin/central-decider/get-ini");
 $url->query_form(%parameters);
 my $response = $ua->get($url);
 
@@ -118,5 +118,5 @@ if($ini_parameters && @$ini_parameters) {
     }
 }
 else {
-  say "No Workflows returned - No workflows should be scheduled based on parameters provided";
+  say "No Workflows returned - No workflows should be scheduled based on parameters provided. If you are using the flag cloud-env keep in mind that the whitelists are pulled from the latest tagged version of the https://github.com/ICGC-TCGA-PanCancer/pcawg-operations website. This repo is tagged nightly. If you want to run whitelist that has not made it into a tag yet run the commad by providing the whitelist with the --whitelist flag instead of using the --cloud-env flag ";
 }
