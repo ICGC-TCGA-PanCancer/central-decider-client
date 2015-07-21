@@ -86,6 +86,10 @@ Specify this path in order to have the tumourBams and controlBams be specifeid w
 
 With this parameter specified it will query the central database but the central database will not record the samples as scheduled. 
 
+=item --stage
+
+This flag changes the url being used to the staging server. This should only be used for development purposes
+
 =item --force
 
 This option make it so that INI files will be generated regardless of whether or not they have been run before.

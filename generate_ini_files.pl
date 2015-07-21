@@ -30,6 +30,8 @@ $ua->timeout(10);
 $ua->env_proxy;
 
 my $host = 'decider.oicrsofteng.org';
+$host = "stage.$host" if ($ARGV{'--stage'});
+
 my $port = 80;
 my $realm = "PanCancer Metadata";
 
