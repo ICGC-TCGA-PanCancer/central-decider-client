@@ -107,16 +107,12 @@ if($ini_parameters && @$ini_parameters) {
         $ini->{gnos_repo}        = $ARGV{'--gnos-repo'} if ($ARGV{'--gnos-repo'});
         $ini->{vm_location_code} = $ARGV{'--vm-location-code'} if ($ARGV{'--vm-location-code'});
 
+        $ini->{tumour_analysis_paths} = 'inputs/'.join(',inputs/', split(',', $ini->{'tumour_analysis_ids'}));
+
         my $ini_filename = ($ARGV{'--workflow-name'} eq 'Workflow_Bundle_BWA')? "ini/$donor_id-$project_code-$sample_id-$sample_type.ini" : "ini/$donor_id-$project_code.ini";
-        if ( ( ($ARGV{'--workflow-name'} eq "DEWrapperWorkflow") 
-                 || ($ARGV{'--workflow-name'} eq "EMBLWorkflow") 
-                 || ($ARGV{'--workflow-name'} eq "DKFZWorkflow") ) && (index($ini->{'tumour_analysis_ids'}, ':') != -1 )) {
-            say "Not creating file $ini_filename because it contains multiple tumours and the German workflows cannot handle multiple tumours yet";
-        }
-        else {
-            say "Generating: $ini_filename";
-            $template->process($ARGV{'--template-file'}, $ini, $ini_filename);
-        }
+                   
+        say "Generating: $ini_filename";
+        $template->process($ARGV{'--template-file'}, $ini, $ini_filename);
     }
 }
 else {
