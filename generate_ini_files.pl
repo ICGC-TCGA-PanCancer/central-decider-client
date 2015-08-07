@@ -107,7 +107,8 @@ if($ini_parameters && @$ini_parameters) {
         $ini->{gnos_repo}        = $ARGV{'--gnos-repo'} if ($ARGV{'--gnos-repo'});
         $ini->{vm_location_code} = $ARGV{'--vm-location-code'} if ($ARGV{'--vm-location-code'});
 
-        $ini->{tumour_analysis_paths} = 'inputs/'.join(',inputs/', split(',', $ini->{'tumour_analysis_ids'}));
+        
+        $ini->{tumour_analysis_paths} = 'inputs/'.join(',inputs/', split(',', $ini->{'tumour_analysis_ids'})) if (exists $ini->{'tumour_analysis_ids'});
 
         my $ini_filename = ($ARGV{'--workflow-name'} eq 'Workflow_Bundle_BWA')? "ini/$donor_id-$project_code-$sample_id-$sample_type.ini" : "ini/$donor_id-$project_code.ini";
                    
